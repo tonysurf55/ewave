@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header_navigation_links %}
+
+    {% set route_name = app.request.attributes.get('_route') %}
+
+    <li class="nav-item {% if route_name == "app_login" %} active {% endif %}">
+        <a class="nav-link" href="{{ path('app_login') }}">
+            <i class="fa fa-home" aria-hidden="true"></i> {{ 'Login'|trans }}
+        </a>
+    </li>
+    <li class="nav-item {% if route_name == "app_register" %} active {% endif %}">
+        <a class="nav-link" href="{{ path('app_register') }}">
+            {{ 'Register'|trans }}
+        </a>
+    </li>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

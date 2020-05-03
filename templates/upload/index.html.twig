@@ -1,0 +1,71 @@
+{% extends 'layout/logged_layout.html.twig' %}
+
+{% block title %}Documents{% endblock %}
+{% block body_id 'upload_index' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="bs-component">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('upload_index') }}">{{'Uploads'|trans}}</a></li>
+            <li class="breadcrumb-item active">{{'List'|trans}}</li>
+        </ol>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+<h3>{{'Documents uploaded'|trans}}</h3>
+
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="file">{{'File name'|trans}}</th>
+      <th scope="date">{{'Date'|trans}}</th>
+      <th scope="action">{{'Actions'|trans}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for upload in uploads %}
+        {% if loop.index % 2 == 0 %}
+            <tr class="table-active">
+        {% else %}
+            <tr>
+        {% endif %}
+            <td><a href="{{ path('upload_get', {'uploadId': upload.id}) }}">{{ upload.name }}</a></td>
+            <td>{{ upload.created|date("d/m/Y H:i") }}</td>
+            <td><a href="{{ path('upload_get', {'uploadId': upload.id}) }}"><button type="button" class="btn btn-success download-btn">{{'Download'|trans}}</button></a></td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+
+
+{% if maxPages > 1 %}
+<div>
+    <ul class="pagination">
+        {# previous page  #}
+        <li class="page-item {{ currentPage == 1 ? 'disabled' }}">
+            <a class="page-link" href="{{ path('upload_index', {page: currentPage-1 < 1 ? 1 : currentPage-1}) }}">&laquo;</a>
+        </li>
+
+        {# page number #}
+        {% for i in 1..maxPages %}
+        <li class="page-item {{ currentPage == i ? 'active' }}">
+            <a class="page-link" href="{{ path('upload_index', {page: i}) }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {# next page #}
+        <li class="page-item {{ currentPage == maxPages ? 'disabled' }}">
+            <a class="page-link" href="{{ path('upload_index', {page: currentPage+1 <= maxPages ? currentPage+1 : currentPage}) }}">&raquo;</a>
+        </li>
+    </ul>
+</div>
+{% endif %}
+
+
+{% endblock %}

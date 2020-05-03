@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block header_navigation_links %}
+    {% set route_name = app.request.attributes.get('_route') %}
+
+    <li class="nav-item {% if route_name == "upload_new" %} active {% endif %}">
+        <a class="nav-link" href="{{ path('upload_new') }}">
+            <i class="fas fa-file-upload" aria-hidden="true"></i>
+            {{'New document'|trans}}
+        </a>
+    </li>
+    <li class="nav-item {% if route_name == "upload_index" %} active {% endif %}">
+        <a class="nav-link" href="{{ path('upload_index') }}">
+            <i class="fa fa-list-alt" aria-hidden="true"></i>
+            {{'List'|trans}}
+        </a>
+    </li>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

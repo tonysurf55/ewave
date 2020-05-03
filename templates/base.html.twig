@@ -1,12 +1,85 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
+        <title>{% block title %}Ewave Test{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+    <body id="{% block body_id %}{% endblock %}">
+
+        {% block header %}
+            <header>
+            
+                <div class="navbar navbar-expand-lg navbar-dark bg-primary" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header col-md-3 col-lg-2">
+                            <span class="navbar-brand mb-0 h1"><i class="fab fa-symfony"></i> Ewave Test</span>                            
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="navbar-nav mr-auto"></ul>
+                            <ul class="nav navbar-nav justify-content-end">
+
+                                {% block header_navigation_links %}{% endblock %}
+
+                                {% if app.user %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="user">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            <span class="caret"></span>
+                                            <span>{{ app.user.username }}</span>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="user">
+                                            <a href="{{ path('app_logout') }}" class="dropdown-item">
+                                                <i class="fa fa-sign-out" aria-hidden="true"></i> {{ 'Logout'|trans }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        <div class="container body-container">
+            {% block body %}
+                <div class="row">
+                    <div id="main" class="col-sm-9">
+                        {% block breadcrumb %}{% endblock %}
+
+                        {{ include('layout/_flash_messages.html.twig') }}
+
+                        {% block main %}{% endblock %}
+                    </div>
+
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block footer %}
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div id="footer-copyright" class="col-md-6">
+                            <p>&copy; {{ 'now'|date('Y') }} - Ewave Test</p>
+                            <p>Anthony Lellouche</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
     </body>
 </html>
+

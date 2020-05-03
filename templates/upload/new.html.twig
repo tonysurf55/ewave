@@ -1,0 +1,39 @@
+{% extends 'layout/logged_layout.html.twig' %}
+
+{% block title %}Upload a Document{% endblock %}
+{% block body_id 'upload_new' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <div class="bs-component">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('upload_index') }}">{{'Uploads'|trans}}</a></li>
+            <li class="breadcrumb-item active">{{'New'|trans}}</li>
+        </ol>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+<h3>{{'Upload a new document'|trans}}</h3>
+
+
+<div class="card bg-light mb-5" style="max-width: 20rem;">
+    <div class="card-body">
+
+        {{ form_start(uploadForm) }}
+
+        <div class="form-group">
+            {{ form_row(uploadForm.file) }}
+        </div>
+        <button type="submit" class="btn btn-primary">{{'Upload'|trans}}</button>
+        
+        {{ form_end(uploadForm) }}
+
+    </div>
+</div>
+
+{% endblock %}
